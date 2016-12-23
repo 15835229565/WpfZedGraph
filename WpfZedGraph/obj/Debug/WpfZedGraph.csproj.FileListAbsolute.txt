@@ -1,0 +1,15 @@
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\bin\Debug\WpfZedGraph.dll
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\bin\Debug\WpfZedGraph.pdb
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\bin\Debug\ZedGraph.dll
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZed.baml
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZed.g.cs
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph_MarkupCompile.cache
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph_MarkupCompile.lref
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\Themes\Generic.baml
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph.g.resources
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph.Properties.Resources.resources
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph.csproj.GenerateResource.Cache
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph.dll
+C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\WpfZedGraph.pdb
