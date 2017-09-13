@@ -38,10 +38,87 @@ namespace WpfZedGraph
             set { SetValue(SourceProperty, value); }
         }
 
+        public static DependencyProperty IsBarTypeProperty;
+
+        public bool IsBarType
+        {
+            get { return (bool)GetValue(IsBarTypeProperty); }
+            set { SetValue(IsBarTypeProperty, value); }
+        }
+
+
+        public static DependencyProperty XAxisTitleProperty;
+
+        public string XAxisTitle
+        {
+            get { return (string)GetValue(XAxisTitleProperty); }
+            set { SetValue(XAxisTitleProperty, value); }
+        }
+
+        public static DependencyProperty YAxisTitleProperty;
+
+        public string YAxisTitle
+        {
+            get { return (string)GetValue(YAxisTitleProperty); }
+            set { SetValue(YAxisTitleProperty, value); }
+        }
+
+        public static DependencyProperty TitleProperty;
+
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
         static WpfZed()
         {
             SourceProperty = DependencyProperty.Register("Source", typeof(ObservableCollection<Curve>), typeof(WpfZed), new FrameworkPropertyMetadata(null, OnItemsChanged));
+            IsBarTypeProperty = DependencyProperty.Register("IsBarType", typeof(bool), typeof(WpfZed), new FrameworkPropertyMetadata(BarTypePropertyChanged));
+            XAxisTitleProperty = DependencyProperty.Register("XAxisTitle", typeof (string), typeof (WpfZed),
+                new FrameworkPropertyMetadata(XAxisTitleChanged));
+
+            YAxisTitleProperty = DependencyProperty.Register("YAxisTitle", typeof(string), typeof(WpfZed),
+    new FrameworkPropertyMetadata(YAxisTitleChanged));
+
+            TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(WpfZed),
+    new FrameworkPropertyMetadata(TitleChanged));
         }
+
+        private static void XAxisTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var me = d as WpfZed;
+            me.Control.GraphPane.XAxis.Title.Text = e.NewValue.ToString();
+            me.Control.GraphPane.AxisChange();
+            me.Control.Invalidate();
+        }
+
+        private static void YAxisTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var me = d as WpfZed;
+            me.Control.GraphPane.YAxis.Title.Text = e.NewValue.ToString();
+            me.Control.GraphPane.AxisChange();
+            me.Control.Invalidate();
+        }
+
+        private static void TitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var me = d as WpfZed;
+            me.Control.GraphPane.Title.Text = e.NewValue.ToString();
+            me.Control.GraphPane.AxisChange();
+            me.Control.Invalidate();
+        }
+
+        private static void BarTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var me = d as WpfZed;
+
+            foreach (var curve in me.Source)
+            {
+                curve.Refresh();
+            }
+        }
+
 
         private static void OnItemsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -75,8 +152,20 @@ namespace WpfZedGraph
                     item.PointsAdded += PointsAdded;
                     item.Refreshed += PointsAdded;
 
-                    var curve = GraphControl.GraphPane.AddCurve(item.Name, item.X, item.Y, item.Color, SymbolType.None);
-                    curve.Tag = item.Tag;
+                    if (!IsBarType)
+                    {
+                        var curve = GraphControl.GraphPane.AddCurve(item.Name, item.X, item.Y, item.Color, SymbolType.None);
+                        curve.Tag = item.Tag;
+                    }
+                    else
+                    {
+                        BarItem bar = GraphControl.GraphPane.AddBar(item.Name, item.X, item.Y, item.Color);
+                        GraphControl.GraphPane.BarSettings.MinClusterGap = 0.0f;
+                        bar.Bar.Fill = new Fill(item.Color);
+                        bar.Bar.Fill.Type = FillType.Solid;
+                        bar.Tag = item.Tag;
+                    }
+                    
                 }
             }
 
@@ -123,8 +212,6 @@ namespace WpfZedGraph
                     break;
             }
             
-
-
             GraphControl.AxisChange();
             GraphControl.Invalidate();
         }
@@ -132,16 +219,28 @@ namespace WpfZedGraph
         private void UpdateCurveForcely(CurveItem curve, Curve crv)
         {
             GraphControl.GraphPane.CurveList.Remove(curve);
-            var newCurve = GraphControl.GraphPane.AddCurve(crv.Name, crv.X, crv.Y, crv.Color, crv.Type);
-            newCurve.Tag = crv.Tag;
-            newCurve.IsVisible = crv.IsVisible;
-            newCurve.Line.Width = crv.Width;
-            newCurve.Line.IsVisible = crv.LineVisible;
-            if(crv.CurveBrush.Count>=2) newCurve.Line.Fill = new Fill(crv.CurveBrush.ToArray());
-            newCurve.Symbol.Size = crv.SymbSize;
-            newCurve.Symbol.Fill.Color = crv.SymbColor;
-            newCurve.Symbol.Fill.Type = FillType.Solid;
-            
+            if (!IsBarType)
+            {
+                var newCurve = GraphControl.GraphPane.AddCurve(crv.Name, crv.X, crv.Y, crv.Color, crv.Type);
+                newCurve.Tag = crv.Tag;
+                newCurve.IsVisible = crv.IsVisible;
+                newCurve.Line.Width = crv.Width;
+                newCurve.Line.IsVisible = crv.LineVisible;
+                if (crv.CurveBrush.Count >= 2) newCurve.Line.Fill = new Fill(crv.CurveBrush.ToArray());
+                newCurve.Symbol.Size = crv.SymbSize;
+                newCurve.Symbol.Fill.Color = crv.SymbColor;
+                newCurve.Symbol.Fill.Type = FillType.Solid;
+            }
+            else
+            {
+                var newBar = GraphControl.GraphPane.AddBar(crv.Name, crv.X, crv.Y, crv.Color);
+                newBar.Tag = crv.Tag;
+                newBar.IsVisible = crv.IsVisible;
+                newBar.Bar.Fill = new Fill(crv.Color);
+                newBar.Bar.Fill.Type = FillType.Solid;
+                GraphControl.GraphPane.BarSettings.MinClusterGap = 0.0f;
+            }
+
 
             GraphControl.AxisChange();
             GraphControl.Invalidate();

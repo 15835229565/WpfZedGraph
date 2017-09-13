@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\Andrew\Documents\Visual Studio 2013\Projects\WpfZedGraph\WpfZedGraph\obj\Debug\
+D:\GitHub\WpfZedGraph\WpfZedGraph\obj\Debug\
 WpfZedGraph
 none
 false
@@ -13,8 +13,8 @@ DEBUG;TRACE
 2-806520656
 
 6-1922200904
-161795959359
+161902656475
 Themes\Generic.xaml;WpfZed.xaml;
 
-False
+True
 
